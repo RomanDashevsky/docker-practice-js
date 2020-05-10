@@ -6,7 +6,7 @@ services:
       context: ./images/app/
       dockerfile: Dockerfile
     tty: true
-    working_dir: /home/node/app
+    working_dir: /home/node/app/z
     command:  >
       sh -c "
         while ! nc -z db 5432;
@@ -42,14 +42,6 @@ services:
       - ../../data/db-dump:/db-dump
     ports:
       - 5432:5432
-    networks:
-      - docker-practice-net
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8090:8080
     networks:
       - docker-practice-net
 

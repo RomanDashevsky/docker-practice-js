@@ -1,5 +1,5 @@
 FROM node:12-alpine
-MAINTAINER Andrey Kruglov <kr.andrey@yahoo.ca>
 WORKDIR /home/node/app
-COPY ./package*.json ./
+COPY ./package*.json /home/node/app/
 RUN npm install
+
