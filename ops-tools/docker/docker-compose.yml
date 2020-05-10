@@ -14,7 +14,7 @@ services:
           echo sleeping;
           sleep 1;
         done;
-        npm run migration:run; npm run start;
+        mv  /node_modules /home/node/app/node_modules; npm run migration:run; npm run start;
       "
     volumes:
       - ../../:/home/node/app
