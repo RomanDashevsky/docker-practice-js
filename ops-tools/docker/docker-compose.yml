@@ -29,17 +29,4 @@ services:
     depends_on:
       - db
       - redis
-
-  # app:
-  #   image: node:12-alpine
-  #   tty: true
-  #   working_dir: /home/node/app
-  #   command: "npm run start"
-  #   ports:
-  #     - 8888:8080
-  #   volumes:
-  #     - ../../.:/home/node/app
-  #   depends_on:
-  #     - db
-  #     - redis
-
+      
