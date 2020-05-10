@@ -6,7 +6,7 @@ services:
       context: ./images/app/
       dockerfile: Dockerfile
     tty: true
-    working_dir: /home/node/app/z
+    working_dir: /home/node/app
     command:  >
       sh -c "
         while ! nc -z db 5432;
