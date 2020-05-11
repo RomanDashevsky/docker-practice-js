@@ -6,37 +6,39 @@ networks:
       bridge
 
 services:
+  
   db:
     image: postgres:11
-    networks: 
-    - docker-practice-net
+    restart: always
     environment:
-      PGDATABASE: school
-      PGUSER: postgres
-      PGPASSWORD: school
-      PGHOST: 127.0.0.1
-      PGPORT: 5432
+      POSTGRES_DB: school
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: school
     volumes: 
-    - "../../data/postgres:/data/postgres"
+    - "../../data/postgres:/usr/local/pgsql/data"
     - "../../data/dump:/db-dump"
     ports:
-    - "5432:5432"
+      - 5432:5432
+    networks:
+      - docker-practice-net
+
   redis:
     image: redis
     networks: 
     - docker-practice-net
     ports:
     - "6379:6379"
-  test3:
-    image: node:14-alpine3.11
-    networks:
+
+  app:
+    build:
+      context: ../../
+      dockerfile: ./ops-tools/docker/images/app/Dockerfile
+    networks: 
     - docker-practice-net
-    ports: 
-    - "8888:8080"
-    working_dir: "/app"
     volumes: 
     - "../../:/app/"
-    command: "npm run start"
+    ports:
+    - "8080:8080"
     depends_on:
     - db
-    - redis
+    - redis 
