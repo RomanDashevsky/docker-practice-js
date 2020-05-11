@@ -11,19 +11,32 @@ services:
     networks: 
     - docker-practice-net
     environment:
-      POSTGRES_DB: school
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: school
-      DB_HOST: 127.0.0.1
-      DB_PORT: 5432
+      PGDATABASE: school
+      PGUSER: postgres
+      PGPASSWORD: school
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
     volumes: 
     - "../../data/postgres:/data/postgres"
     - "../../data/dump:/db-dump"
     ports:
-    - "127.0.0.1:5432:5432"
+    - "5432:5432"
   redis:
     image: redis
     networks: 
     - docker-practice-net
     ports:
     - "6379:6379"
+  test3:
+    image: node:14-alpine3.11
+    networks:
+    - docker-practice-net
+    ports: 
+    - "8888:8080"
+    working_dir: "/app"
+    volumes: 
+    - "../../:/app/"
+    command: "npm run start"
+    depends_on:
+    - db
+    - redis
