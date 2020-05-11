@@ -1,8 +1,6 @@
 FROM node:14-alpine3.11
-
 ADD ./ ./
 WORKDIR /app
-
-RUN node --version && npm --version
-
-CMD [ "npm", "run", "start"];
+RUN npm i
+EXPOSE 8080
+CMD [ "npm", "run", "start:dev"];

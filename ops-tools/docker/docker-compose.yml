@@ -9,7 +9,7 @@ services:
   
   db:
     image: postgres:11
-    restart: always
+    tty: true
     environment:
       POSTGRES_DB: school
       POSTGRES_USER: postgres
@@ -38,7 +38,7 @@ services:
     volumes: 
     - "../../:/app/"
     ports:
-    - "8080:8080"
+    - "8888:8080"
     depends_on:
     - db
-    - redis 
+    - redis
