@@ -3,5 +3,6 @@ ADD ./package*.json ./
 WORKDIR /app
 RUN npm i
 EXPOSE 8080
-ENTRYPOINT [ "npm", "run" ];
-CMD [ "migration:run", "start:dev"];
+COPY ./docker-entrypoint.sh ./
+RUN chmod 0755 docker-entrypoint.sh
+ENTRYPOINT [ "docker-entrypoint.sh" ];
