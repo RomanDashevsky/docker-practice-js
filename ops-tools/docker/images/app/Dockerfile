@@ -1,6 +1,7 @@
-FROM node:14-alpine3.11
-ADD ./ ./
+FROM node:12-alpine3.11
+ADD ./package*.json ./
 WORKDIR /app
 RUN npm i
 EXPOSE 8080
-CMD [ "npm", "run", "start:dev"];
+ENTRYPOINT [ "npm", "run" ];
+CMD [ "migration:run", "start:dev"];
