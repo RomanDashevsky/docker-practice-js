@@ -34,6 +34,11 @@ services:
     build:
       context: ../../
       dockerfile: ./ops-tools/docker/images/app/Dockerfile
+    healthcheck:
+      test: curl -sS http://db || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
     networks: 
     - docker-practice-net
     volumes: 
