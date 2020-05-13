@@ -7,4 +7,5 @@ WORKDIR /app
 RUN npm i
 
 COPY ./ops-tools/docker/images/app/docker-entrypoint.sh /docker-entrypoint.sh
-ENTRYPOINT ["sh", "/docker-entrypoint.sh" ]
+ENTRYPOINT [ "sh", "/docker-entrypoint.sh" ]
+CMD [ "npm", "run", "start:dev" ]
