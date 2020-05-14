@@ -26,6 +26,8 @@ services:
     build:
       context: ../../
       dockerfile: ./ops-tools/docker/images/app/Dockerfile
+    working_dir: /app
+    command: "npm run start"
     volumes:
       - ../../:/app
     ports:
