@@ -1,0 +1,47 @@
+version: "3.7"
+
+networks:
+  docker-practice-net:
+    driver:
+      bridge
+
+services:
+  
+  db:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_DB: school
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: school
+    volumes: 
+    - "../../data/postgres:/usr/local/pgsql/data"
+    - "../../data/dump:/db-dump"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+    ports:
+      - 5432:5432
+    networks:
+      - docker-practice-net
+
+  redis:
+    image: redis
+    restart: always
+    networks: 
+    - docker-practice-net
+    ports:
+    - "6379:6379"
+
+  app:
+    build:
+      context: ../../
+      dockerfile: ./ops-tools/docker/images/app/Dockerfile
+    networks: 
+    - docker-practice-net
+    volumes: 
+    - "../../:/app/"
+    ports:
+    - "8888:8080"
+    depends_on:
+    - db
+    - redis
