@@ -27,7 +27,7 @@ services:
       context: ../../
       dockerfile: ./ops-tools/docker/images/app/Dockerfile
     working_dir: /app
-    command: "nodemon server.js"
+    command: bash -c "npm run migration:run && npm run start:dev"
     volumes:
       - ../../:/app
     ports:

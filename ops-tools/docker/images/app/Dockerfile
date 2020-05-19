@@ -1,6 +1,6 @@
 FROM node:12-alpine
+RUN apk add --no-cache bash
 WORKDIR /app
-RUN npm install -g nodemon
 COPY package.json /app
 RUN npm install
 EXPOSE 8888
