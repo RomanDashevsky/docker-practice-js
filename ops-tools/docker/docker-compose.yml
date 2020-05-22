@@ -19,6 +19,15 @@ services:
     depends_on:
       - redis
       - db
+    command: >
+      sh -c "
+        while ! nc -vz db 5432;
+        do
+          sleep 1;
+        done;
+
+        npm run migration:run; npm run start;
+      "
     networks:
       - docker-practice-net
 
