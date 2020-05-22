@@ -1,0 +1,46 @@
+version: "2.0"
+
+services:
+
+  db:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_DB: school
+      POSTGRES_PASSWORD: school
+      POSTGRES_USER: postgres
+    volumes:
+      - "../../data/postgres"
+      - "../../data/dump"
+    ports:
+      - 5432:5432  
+    networks:
+      - docker-practice-net
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - docker-practice-net
+
+  app:
+    build:
+      context: ./images/app
+      dockerfile: Dockerfile
+    volumes: 
+      - "../../:/app/"
+    ports:
+      - 8888:8080  
+    depends_on:
+      - redis
+      - db
+    networks:
+      - docker-practice-net
+
+networks:
+  docker-practice-net:
+    driver:
+      bridge
+
