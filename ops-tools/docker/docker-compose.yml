@@ -1,4 +1,4 @@
-version: "2.1"
+version: "3.7"
 services:
   db:
     image: postgres:12
@@ -14,11 +14,6 @@ services:
       - 5432:5432
     networks:
       - docker-practice-net
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   redis:
     image: redis:6
@@ -32,16 +27,18 @@ services:
       context: ../../
       dockerfile: ./ops-tools/docker/images/app/Dockerfile
     working_dir: /app
-    command: bash -c "npm run migration:run && npm run start:dev"
+    command:  >
+      sh -c "
+        while ! nc -z db 5432;
+        do
+          sleep 1;
+        done;
+        npm run migration:run; npm run start;
+      "
     volumes:
       - ../../:/app
     ports:
       - 8888:8080
-    depends_on:
-      db:
-        condition: service_healthy 
-      redis:
-        condition: service_started
     networks:
       - docker-practice-net
 
